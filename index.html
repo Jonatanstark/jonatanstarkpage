@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonatan Stark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-logo">JS</span>
+    <a href="mailto:hello@jonatanstark.com" class="nav-cta">Get in touch</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Hello, I'm</p>
+        <h1 class="hero-name">Jonatan<br />Stark</h1>
+        <p class="hero-desc">
+          Building digital solutions at the intersection of code, design, and curiosity.
+        </p>
+        <div class="hero-actions">
+          <a href="#about" class="btn btn-primary">Learn more about me</a>
+          <a href="mailto:hello@jonatanstark.com" class="btn btn-ghost">Say hello →</a>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <div class="hero-image-bg"></div>
+        <img src="profile.jpg" alt="Jonatan Stark" class="hero-image" />
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- BARBELL 3D DIVIDER -->
+  <section class="barbell-section">
+    <canvas id="barbell-canvas"></canvas>
+    <p class="barbell-tagline">Squat 200 &nbsp;·&nbsp; Bench 150 &nbsp;·&nbsp; Deadlift 180</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+
+      <div class="section-label">About me</div>
+
+      <div class="about-grid">
+
+        <div class="about-block">
+          <div class="about-icon">💼</div>
+          <h3>What I do</h3>
+          <p>
+            Currently working as a <strong>Service Account Representative at Tetra Pak</strong>,
+            managing key client relationships while building digital solutions on the side.
+            Programming and bitcoin are two passions that keep me busy outside of hours.
+          </p>
+        </div>
+
+        <div class="about-block">
+          <div class="about-icon">₿</div>
+          <h3>Tech & Bitcoin</h3>
+          <p>
+            I'm passionate about the intersection of software and financial freedom.
+            Building products with real utility — and staying deep in the Bitcoin rabbit hole.
+          </p>
+        </div>
+
+        <div class="about-block">
+          <div class="about-icon">🏋️</div>
+          <h3>Iron & discipline</h3>
+          <p>
+            16 years of consistent training in the gym. Strength is a lifestyle, not a phase.
+          </p>
+          <div class="pr-list">
+            <div class="pr-item">
+              <span class="pr-lift">Squat</span>
+              <span class="pr-bar-wrap">
+                <span class="pr-bar" style="--pct: 100%"></span>
+              </span>
+              <span class="pr-kg">200 kg</span>
+            </div>
+            <div class="pr-item">
+              <span class="pr-lift">Bench</span>
+              <span class="pr-bar-wrap">
+                <span class="pr-bar" style="--pct: 75%"></span>
+              </span>
+              <span class="pr-kg">150 kg</span>
+            </div>
+            <div class="pr-item">
+              <span class="pr-lift">Deadlift</span>
+              <span class="pr-bar-wrap">
+                <span class="pr-bar" style="--pct: 90%"></span>
+              </span>
+              <span class="pr-kg">180 kg</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Jonatan Stark</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="barbell.js"></script>
+</body>
+</html>
