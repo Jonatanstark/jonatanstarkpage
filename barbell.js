@@ -2,138 +2,144 @@
   const canvas  = document.getElementById('barbell-canvas');
   const section = document.querySelector('.barbell-section');
 
-  // ── Renderer ──
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(section.clientWidth, section.clientHeight);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  // ── Scene / Camera ──
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(36, section.clientWidth / section.clientHeight, 0.1, 100);
-  camera.position.set(0, 1.6, 6.2);
+  camera.position.set(0, 1.2, 7.0);
   camera.lookAt(0, 0, 0);
 
-  // ── Lights ──
-  scene.add(new THREE.AmbientLight(0xffffff, 0.28));
-  const key = new THREE.DirectionalLight(0xfff8e8, 2.6);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+  const key = new THREE.DirectionalLight(0xfff8e8, 3.0);
   key.position.set(5, 8, 5);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xa8c8ff, 0.6);
+  const fill = new THREE.DirectionalLight(0xa8c8ff, 0.8);
   fill.position.set(-6, -2, 3);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffffff, 1.0);
+  const rim = new THREE.DirectionalLight(0xffffff, 1.2);
   rim.position.set(0, 3, -7);
   scene.add(rim);
-  const under = new THREE.DirectionalLight(0xc9a96e, 0.35);
-  under.position.set(0, -5, 0);
-  scene.add(under);
 
-  // ── Shared Materials ──
   const chromeMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d4, metalness: 1.0, roughness: 0.12 });
-  const knurlMat  = new THREE.MeshStandardMaterial({ color: 0x999999, metalness: 0.85, roughness: 0.5 });
+  const knurlMat  = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.85, roughness: 0.5 });
   const collarMat = new THREE.MeshStandardMaterial({ color: 0xc9a96e, metalness: 0.92, roughness: 0.18 });
-  const hubMat    = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.7,  roughness: 0.35 });
+  const hubMat    = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.7,  roughness: 0.35 });
 
   function cyl(rT, rB, h, seg, mat) {
-    return new THREE.Mesh(new THREE.CylinderGeometry(rT, rB, h, seg), mat);
-  }
-  function addX(group, mesh, x) {
-    mesh.rotation.z = Math.PI / 2;
-    mesh.position.x = x;
-    group.add(mesh);
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(rT, rB, h, seg), mat);
+    m.rotation.z = Math.PI / 2;
+    return m;
   }
 
-  // ── Static bar structure ──
+  // ── Bar (static) ──
   const barbell = new THREE.Group();
-
-  addX(barbell, cyl(0.038, 0.038, 2.0, 24, knurlMat),   0);       // knurled centre
-  addX(barbell, cyl(0.038, 0.038, 0.28, 16, chromeMat),  1.14);   // smooth R
-  addX(barbell, cyl(0.038, 0.038, 0.28, 16, chromeMat), -1.14);   // smooth L
-  addX(barbell, cyl(0.056, 0.056, 1.06, 20, chromeMat),  1.81);   // sleeve R
-  addX(barbell, cyl(0.056, 0.056, 1.06, 20, chromeMat), -1.81);   // sleeve L
-  addX(barbell, cyl(0.062, 0.062, 0.04, 20, chromeMat),  2.365);  // end cap R
-  addX(barbell, cyl(0.062, 0.062, 0.04, 20, chromeMat), -2.365);  // end cap L
-
-  barbell.rotation.z = 0.07;
+  barbell.rotation.z = 0.06;
   scene.add(barbell);
 
-  // ── Plate definitions ──
-  // IPF colours: 20kg=blue, 10kg=green, 5kg=white/light
-  const PLATES = {
-    20:  { r: 0.52, t: 0.070, color: 0x1a4fcc },  // blue
-    10:  { r: 0.44, t: 0.058, color: 0x16a34a },  // green
-    5:   { r: 0.36, t: 0.048, color: 0xd4d4d4 },  // white
+  function addPart(mesh, x) { mesh.position.x = x; barbell.add(mesh); }
+  addPart(cyl(0.038, 0.038, 2.0,  24, knurlMat),   0);
+  addPart(cyl(0.038, 0.038, 0.28, 16, chromeMat),  1.14);
+  addPart(cyl(0.038, 0.038, 0.28, 16, chromeMat), -1.14);
+  addPart(cyl(0.056, 0.056, 1.06, 20, chromeMat),  1.81);
+  addPart(cyl(0.056, 0.056, 1.06, 20, chromeMat), -1.81);
+  addPart(cyl(0.062, 0.062, 0.04, 20, chromeMat),  2.365);
+  addPart(cyl(0.062, 0.062, 0.04, 20, chromeMat), -2.365);
+
+  // ── Plates ──
+  const PLATE_DEF = {
+    20: { r: 0.52, t: 0.072, color: 0x1a4fcc },
+    10: { r: 0.44, t: 0.060, color: 0x16a34a },
+     5: { r: 0.36, t: 0.050, color: 0x16a34a },
   };
 
-  // Per lift: plates stacked from inner sleeve outward (one side)
   const PRESETS = {
-    squat:    [20, 20, 20, 20, 10],  // 90 kg/side → 200 kg total
-    bench:    [20, 20, 20, 5],       // 65 kg/side → 150 kg total
-    deadlift: [20, 20, 20, 20],      // 80 kg/side → 180 kg total
+    squat:    [20, 20, 20, 20, 10],
+    bench:    [20, 20, 20, 10],
+    deadlift: [20, 20, 20, 20],
   };
 
-  // ── Build plate meshes for a preset ──
   function buildPlates(weights) {
     const group = new THREE.Group();
     [1, -1].forEach(side => {
-      let x = side * 1.30;  // inner sleeve start
-
+      let x = side * 1.30;
       weights.forEach(w => {
-        const { r, t, color } = PLATES[w];
+        const { r, t, color } = PLATE_DEF[w];
         x += side * (t / 2);
 
-        // Disc
         const disc = cyl(r, r, t, 48,
-          new THREE.MeshStandardMaterial({ color, metalness: 0.5, roughness: 0.45 }));
-        disc.rotation.z = Math.PI / 2;
+          new THREE.MeshStandardMaterial({ color, metalness: 0.4, roughness: 0.5 }));
         disc.position.x = x;
         group.add(disc);
 
-        // Hub ring
-        const hub = cyl(0.095, 0.095, t + 0.003, 24, hubMat);
-        hub.rotation.z = Math.PI / 2;
+        const hub = cyl(0.09, 0.09, t + 0.004, 24, hubMat);
         hub.position.x = x;
         group.add(hub);
 
-        x += side * (t / 2 + 0.013);
+        x += side * (t / 2 + 0.010);
       });
-
-      // Gold collar
       const collar = cyl(0.071, 0.071, 0.16, 24, collarMat);
-      collar.rotation.z = Math.PI / 2;
       collar.position.x = x + side * 0.08;
       group.add(collar);
     });
     return group;
   }
 
-  // ── Plate container inside barbell group ──
+  function disposeGroup(group) {
+    group.traverse(obj => {
+      if (obj.isMesh) {
+        obj.geometry.dispose();
+        if (obj.material && obj.material.dispose) obj.material.dispose();
+      }
+    });
+  }
+
   const platesContainer = new THREE.Group();
   barbell.add(platesContainer);
 
-  let currentGroup = buildPlates(PRESETS.squat);
-  platesContainer.add(currentGroup);
+  let activeGroup = buildPlates(PRESETS.squat);
+  platesContainer.add(activeGroup);
 
   // ── Transition state ──
-  let outGroup   = null;
-  let inGroup    = null;
-  let phase      = 'idle';  // 'out' | 'in' | 'idle'
-  let tProgress  = 0;
-  const SPEED    = 4;       // transition speed multiplier
+  let nextPreset  = null;
+  let phase       = 'idle';
+  let elapsed     = 0;
+  let floatClock  = 0;
+  let impactClock = -1;   // clock value at moment of impact
 
+  const OUT_DUR  = 0.28;   // seconds to fall off-screen
+  const IN_DUR   = 0.78;   // seconds for drop + settle
+  const DROP_TOP =  6.5;   // y-spawn point above screen
+  const DROP_BOT = -6.0;   // y-exit point below screen
+
+  // Normalized y [0=floor, 1=drop_top]: heavy weight physics — fast fall, hard stop, one low thud
+  function dropBounce(t) {
+    if (t < 0.60) {
+      // Free-fall: constant acceleration (s = ½gt²)
+      const ft = t / 0.60;
+      return 1 - ft * ft;
+    } else if (t < 0.78) {
+      // One low bounce: ~5% of drop height (bumper plates, not rubber)
+      const bt = (t - 0.60) / 0.18;
+      return 0.05 * 4 * bt * (1 - bt);
+    } else if (t < 0.92) {
+      // Micro-settle: barely lifts off again
+      const bt = (t - 0.78) / 0.14;
+      return 0.012 * 4 * bt * (1 - bt);
+    }
+    return 0;
+  }
+
+  function easeInCubic(t) { return t * t * t; }
+  function lerp(a, b, t)  { return a + (b - a) * t; }
+
+  // ── Buttons ──
   function switchTo(presetName) {
     if (phase !== 'idle') return;
-
-    outGroup  = currentGroup;
-    inGroup   = buildPlates(PRESETS[presetName]);
-    inGroup.scale.set(0, 0, 0);
-    platesContainer.add(inGroup);
-
-    phase     = 'out';
-    tProgress = 0;
-
+    nextPreset = presetName;
+    phase      = 'out';
+    elapsed    = 0;
     document.querySelectorAll('.lift-btn').forEach(b =>
       b.classList.toggle('active', b.dataset.lift === presetName));
   }
@@ -141,12 +147,8 @@
   document.querySelectorAll('.lift-btn').forEach(btn =>
     btn.addEventListener('click', () => switchTo(btn.dataset.lift)));
 
-  // ── Animate ──
-  let lastT = 0;
-  let clock = 0;
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeIn(t)  { return t * t * t; }
+  // ── Render loop ──
+  let lastT = 0, clock = 0;
 
   function animate(ts) {
     requestAnimationFrame(animate);
@@ -154,33 +156,54 @@
     lastT = ts;
     clock += dt;
 
-    // Spin & float
-    barbell.rotation.y  = clock * 0.5;
-    barbell.position.y  = Math.sin(clock * 0.4) * 0.09;
+    barbell.rotation.y = clock * 0.45;
 
-    // Plate transition
     if (phase === 'out') {
-      tProgress += dt * SPEED;
-      const s = Math.max(0, 1 - easeIn(Math.min(tProgress, 1)));
-      outGroup.scale.set(s, s, s);
+      elapsed += dt;
+      const t = Math.min(elapsed / OUT_DUR, 1);
+      barbell.position.y = lerp(0, DROP_BOT, easeInCubic(t));
 
-      if (tProgress >= 1) {
-        platesContainer.remove(outGroup);
-        outGroup  = null;
-        phase     = 'in';
-        tProgress = 0;
-        currentGroup = inGroup;
+      if (elapsed >= OUT_DUR) {
+        platesContainer.remove(activeGroup);
+        disposeGroup(activeGroup);
+        activeGroup = buildPlates(PRESETS[nextPreset]);
+        platesContainer.add(activeGroup);
+        nextPreset  = null;
+        impactClock = -1;
+
+        barbell.position.y = DROP_TOP;
+        phase   = 'in';
+        elapsed = 0;
       }
+
     } else if (phase === 'in') {
-      tProgress += dt * SPEED;
-      const s = easeOut(Math.min(tProgress, 1));
-      inGroup.scale.set(s, s, s);
+      elapsed += dt;
+      const t = Math.min(elapsed / IN_DUR, 1);
+      barbell.position.y = DROP_TOP * dropBounce(t);
 
-      if (tProgress >= 1) {
-        inGroup.scale.set(1, 1, 1);
-        inGroup   = null;
-        phase     = 'idle';
+      // Trigger impact wobble the first frame the barbell hits floor (t >= 0.60)
+      if (impactClock < 0 && elapsed >= IN_DUR * 0.60) {
+        impactClock = clock;
       }
+
+      if (elapsed >= IN_DUR) {
+        barbell.position.y = 0;
+        floatClock = 0;
+        phase = 'idle';
+      }
+
+    } else {
+      floatClock += dt;
+      barbell.position.y = Math.sin(floatClock * 0.4) * 0.09;
+    }
+
+    // Impact wobble: sharp jolt on z-rotation that decays fast
+    if (impactClock >= 0) {
+      const wt = clock - impactClock;
+      const wobble = 0.07 * Math.sin(wt * 22) * Math.exp(-16 * wt);
+      barbell.rotation.z = 0.06 + wobble;
+    } else {
+      barbell.rotation.z = 0.06;
     }
 
     renderer.render(scene, camera);
@@ -188,7 +211,6 @@
 
   requestAnimationFrame(animate);
 
-  // ── Resize ──
   window.addEventListener('resize', () => {
     const w = section.clientWidth;
     const h = section.clientHeight;

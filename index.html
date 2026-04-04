@@ -13,7 +13,6 @@
 </head>
 <body>
 
-  
   <nav class="nav">
     <span class="nav-logo">JS</span>
     <a href="mailto:jonatan.v.stark@gmail.com" class="nav-cta">Get in touch</a>
@@ -44,19 +43,8 @@
     </div>
   </section>
 
-  <!-- BARBELL 3D DIVIDER -->
-  <section class="barbell-section">
-    <canvas id="barbell-canvas"></canvas>
-    <div class="barbell-controls">
-      <button class="lift-btn active" data-lift="squat">Squat <span>200 kg</span></button>
-      <button class="lift-btn" data-lift="bench">Bench <span>150 kg</span></button>
-      <button class="lift-btn" data-lift="deadlift">Deadlift <span>180 kg</span></button>
-    </div>
-  </section>
-
-
   <!-- SKILLS -->
-  <section class="skills-section">
+  <section class="skills-section" id="about">
     <div class="skills-inner">
       <p class="section-label">Skills & tools</p>
       <div class="skills-categories">
@@ -114,75 +102,13 @@
     </div>
   </section>
 
-  <!-- INTERESTS -->
-  <section class="interests-section" id="about">
-    <div class="interests-inner">
-      <p class="section-label">Beyond the screen</p>
-      <p class="interests-hint">Flip the cards</p>
-      <div class="interests-grid">
-
-        <div class="flip-card" data-color="red">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div class="fc-glow"></div>
-              <span class="fc-icon">🏋️</span>
-              <h4>Iron & Endurance</h4>
-              <span class="fc-tag">Powerlifting · Running · CrossFit</span>
-            </div>
-            <div class="flip-back">
-              <p>16 years of consistent training. Squat 200 kg, bench 150 kg, deadlift 180 kg — and still chasing PRs. CrossFit and running keep the engine sharp.</p>
-              <div class="fc-stats">
-                <span>🏋️ 200 kg squat</span>
-                <span>💪 150 kg bench</span>
-                <span>⚡ 180 kg deadlift</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" data-color="green">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div class="fc-glow"></div>
-              <span class="fc-icon">⛳</span>
-              <h4>Golf & Tennis</h4>
-              <span class="fc-tag">Precision · Patience · Consistency</span>
-            </div>
-            <div class="flip-back">
-              <p>Two sports that punish overthinking and reward repetition. Golf teaches humility. Tennis teaches to never give up a point. Both keep the competitive edge sharp.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" data-color="blue">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div class="fc-glow"></div>
-              <span class="fc-icon">🤖</span>
-              <h4>AI Enthusiast</h4>
-              <span class="fc-tag">LLMs · Agents · Building</span>
-            </div>
-            <div class="flip-back">
-              <p>Obsessed with what large language models unlock for builders. The gap between idea and working product has never been smaller — and I intend to use that edge.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" data-color="gold">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div class="fc-glow"></div>
-              <span class="fc-icon">📊</span>
-              <h4>Economics</h4>
-              <span class="fc-tag">Markets · Monetary theory · ₿</span>
-            </div>
-            <div class="flip-back">
-              <p>Student of markets, monetary theory and economic cycles. Fascinated by how incentives shape everything — from companies to currencies to code.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <!-- BARBELL 3D -->
+  <section class="barbell-section">
+    <canvas id="barbell-canvas"></canvas>
+    <div class="barbell-controls">
+      <button class="lift-btn active" data-lift="squat">Squat <span>200 kg</span></button>
+      <button class="lift-btn" data-lift="bench">Bench <span>150 kg</span></button>
+      <button class="lift-btn" data-lift="deadlift">Deadlift <span>180 kg</span></button>
     </div>
   </section>
 
@@ -191,7 +117,6 @@
     <p>© 2026 Jonatan Stark</p>
   </footer>
 
-  <script src="script.js"></script>
   <script src="barbell.js"></script>
   <script src="eth-chart.js"></script>
 </body>
