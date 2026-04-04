@@ -207,7 +207,7 @@ body {
 /* ── Barbell Section ── */
 .barbell-section {
   position: relative;
-  height: 340px;
+  height: 420px;
   background:
     radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,169,110,0.07) 0%, transparent 70%),
     linear-gradient(to bottom, var(--bg-2), var(--bg), var(--bg-2));
@@ -222,19 +222,44 @@ body {
   height: 100%;
 }
 
-.barbell-tagline {
+.barbell-controls {
   position: absolute;
-  bottom: 20px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.lift-btn {
+  background: rgba(13,13,13,0.7);
+  border: 1px solid rgba(255,255,255,0.1);
   color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(8px);
   white-space: nowrap;
-  pointer-events: none;
-  opacity: 0.6;
+}
+.lift-btn span {
+  color: var(--accent-2);
+  margin-left: 5px;
+  font-weight: 600;
+}
+.lift-btn:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: var(--text);
+}
+.lift-btn.active {
+  background: rgba(201,169,110,0.15);
+  border-color: rgba(201,169,110,0.5);
+  color: var(--text);
 }
 
 /* ── Section label (shared) ── */
@@ -528,7 +553,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .scroll-hint { display: none; }
 
   /* Barbell */
-  .barbell-section { height: 220px; }
+  .barbell-section { height: 280px; }
+  .lift-btn { font-size: 0.68rem; padding: 7px 14px; }
 
   /* Skills */
   .skills-inner { padding: 56px 20px; }
