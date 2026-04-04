@@ -96,6 +96,15 @@ body {
   margin-bottom: 24px;
 }
 
+.hero-meta {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  opacity: 0.75;
+}
+
 .hero-desc {
   font-size: 1.15rem;
   color: var(--text-muted);
