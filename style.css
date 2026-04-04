@@ -388,11 +388,14 @@ body {
   height: 100%;
   transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
 }
-.flip-card:hover .flip-card-inner,
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
+/* Hover only on pointer devices (not touch) */
+@media (hover: hover) {
+  .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
 }
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
 
 .flip-front,
 .flip-back {
@@ -407,6 +410,8 @@ body {
   justify-content: flex-end;
   padding: 28px 24px;
 }
+/* Explicit front transform keeps it from bleeding through on Safari */
+.flip-front { transform: rotateY(0deg); }
 
 /* Front faces — colored gradient per card */
 .flip-front { border: 1px solid rgba(255,255,255,0.06); }
@@ -491,32 +496,20 @@ body {
 }
 
 /* ── Responsive ── */
+
+/* Prevent horizontal scroll on all devices */
+html, body { overflow-x: hidden; max-width: 100%; }
+
 @media (max-width: 900px) {
   .hero-content {
     flex-direction: column-reverse;
     text-align: center;
+    gap: 36px;
   }
   .hero-text { max-width: 100%; }
-  .hero-desc { max-width: 100%; }
+  .hero-desc { max-width: 100%; margin-left: auto; margin-right: auto; }
   .hero-actions { justify-content: center; }
-  .hero-image {
-    width: 240px;
-    height: 300px;
-  }
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-  }
-  .stat-item {
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 32px;
-  }
-  .stat-item:nth-child(3),
-  .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .now-strip { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .now-divider { width: 100%; height: 1px; margin: 0; }
+  .hero-image { width: 200px; height: 250px; }
   .skills-category { flex-direction: column; gap: 12px; }
   .skills-cat-title { width: auto; }
   .interests-grid { grid-template-columns: repeat(2, 1fr); }
@@ -525,15 +518,36 @@ body {
 
 @media (max-width: 600px) {
   .nav { padding: 16px 20px; }
-  .hero { padding: 100px 20px 60px; }
-  .stats-inner { padding: 64px 20px; }
-  .hero-name { font-size: 2.8rem; }
-  .stats-grid { grid-template-columns: 1fr; }
-  .stat-item { border-bottom: 1px solid var(--border); padding-bottom: 28px; }
-  .stat-item:last-child { border-bottom: none; }
-  .interests-grid { grid-template-columns: 1fr; }
-  .flip-card { height: 220px; }
-  .skills-inner, .chart-inner, .interests-inner { padding: 64px 20px; }
+
+  /* Hero */
+  .hero { padding: 90px 20px 60px; }
+  .hero-name { font-size: 2.6rem; }
+  .hero-meta { font-size: 0.72rem; }
+  .hero-desc { font-size: 1rem; }
+  .hero-image { width: 160px; height: 200px; }
+  .scroll-hint { display: none; }
+
+  /* Barbell */
+  .barbell-section { height: 220px; }
+
+  /* Skills */
+  .skills-inner { padding: 56px 20px; }
+
+  /* Chart */
+  .chart-inner { padding: 56px 20px; }
+  .chart-pair { font-size: 1.2rem; }
+  .chart-price { font-size: 1.8rem; }
+  .chart-wrap { height: 200px; }
+
+  /* Interests */
+  .interests-inner { padding: 56px 20px; }
+  .interests-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .flip-card { height: 200px; }
+  .fc-icon { font-size: 1.8rem; }
+  .flip-front h4 { font-size: 0.88rem; }
+  .fc-tag { display: none; }
+  .flip-back p { font-size: 0.8rem; }
+  .flip-back { padding: 18px 16px; }
 }
 
 /* ── Fade-in on scroll ── */
