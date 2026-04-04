@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="background:#000000">
+  <!-- Background -->
+  <rect x="-5" y="-5" width="110" height="110" fill="#000000"/>
+
+  <!-- Circle ring, centered slightly left -->
+  <circle cx="43" cy="50" r="33" fill="none" stroke="#b8b8b8" stroke-width="5"/>
+
+  <!-- Diagonal slash through the circle -->
+  <line x1="17" y1="82" x2="69" y2="15" stroke="#b8b8b8" stroke-width="3.5"/>
+
+  <!-- Large J -->
+  <text x="43" y="65"
+    text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="46"
+    font-weight="900"
+    fill="#b8b8b8">J</text>
+
+  <!-- Small S outside circle on the right -->
+  <text x="74" y="62"
+    text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="19"
+    font-weight="900"
+    fill="#b8b8b8">S</text>
+</svg>
