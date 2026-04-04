@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
 
@@ -109,6 +110,99 @@
     </div>
   </section>
 
+  <!-- SKILLS -->
+  <section class="skills-section">
+    <div class="skills-inner">
+      <p class="section-label">Skills & tools</p>
+      <div class="skills-categories">
+
+        <div class="skills-category">
+          <h3 class="skills-cat-title">Development</h3>
+          <div class="skills-chips">
+            <span class="chip">Java</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Python</span>
+            <span class="chip">HTML / CSS</span>
+            <span class="chip">SQL</span>
+            <span class="chip">Git</span>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="skills-cat-title">Business & Tools</h3>
+          <div class="skills-chips">
+            <span class="chip chip-muted">SAP</span>
+            <span class="chip chip-muted">Excel</span>
+            <span class="chip chip-muted">Microsoft 365</span>
+            <span class="chip chip-muted">CRM Systems</span>
+            <span class="chip chip-muted">Business Analysis</span>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="skills-cat-title">Emerging</h3>
+          <div class="skills-chips">
+            <span class="chip chip-gold">AI / LLMs</span>
+            <span class="chip chip-gold">Prompt Engineering</span>
+            <span class="chip chip-gold">Web3</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ETH CHART -->
+  <section class="chart-section">
+    <div class="chart-inner">
+      <div class="chart-header">
+        <p class="section-label">Markets</p>
+        <div class="chart-title-row">
+          <span class="chart-pair">ETH / USD</span>
+          <span class="chart-period" id="eth-change">30 days</span>
+        </div>
+        <p class="chart-price" id="eth-price">—</p>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="eth-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section class="interests-section">
+    <div class="interests-inner">
+      <p class="section-label">Beyond the screen</p>
+      <div class="interests-grid">
+
+        <div class="interest-card">
+          <span class="interest-icon">🏋️</span>
+          <h4>Iron & Endurance</h4>
+          <p>Powerlifting, running and CrossFit. 16 years of showing up.</p>
+        </div>
+
+        <div class="interest-card">
+          <span class="interest-icon">⛳</span>
+          <h4>Golf & Tennis</h4>
+          <p>Two games that reward patience, precision and a short memory.</p>
+        </div>
+
+        <div class="interest-card">
+          <span class="interest-icon">🤖</span>
+          <h4>AI Enthusiast</h4>
+          <p>Fascinated by large language models and what they unlock for builders who move fast.</p>
+        </div>
+
+        <div class="interest-card">
+          <span class="interest-icon">📐</span>
+          <h4>Economics</h4>
+          <p>Student of markets and monetary theory. Draws heavily from the Austrian School — Mises, Hayek, and the case for sound money.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <p>© 2026 Jonatan Stark</p>
@@ -116,5 +210,6 @@
 
   <script src="script.js"></script>
   <script src="barbell.js"></script>
+  <script src="eth-chart.js"></script>
 </body>
 </html>
