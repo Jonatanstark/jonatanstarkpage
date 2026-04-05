@@ -11,16 +11,19 @@
   camera.position.set(0, 1.2, 7.0);
   camera.lookAt(0, 0, 0);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-  const key = new THREE.DirectionalLight(0xfff8e8, 3.0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xfff4e0, 2.2);
   key.position.set(5, 8, 5);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xa8c8ff, 0.8);
+  const fill = new THREE.DirectionalLight(0xd0e8ff, 0.5);
   fill.position.set(-6, -2, 3);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffffff, 1.2);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.9);
   rim.position.set(0, 3, -7);
   scene.add(rim);
+  const under = new THREE.DirectionalLight(0xfff0d0, 0.3);
+  under.position.set(0, -5, 2);
+  scene.add(under);
 
   const chromeMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d4, metalness: 1.0, roughness: 0.12 });
   const knurlMat  = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.85, roughness: 0.5 });
@@ -47,11 +50,11 @@
   addPart(cyl(0.062, 0.062, 0.04, 20, chromeMat),  2.365);
   addPart(cyl(0.062, 0.062, 0.04, 20, chromeMat), -2.365);
 
-  // ── Plates ──
+  // ── Plate definitions (Eleiko IPF colours) ──
   const PLATE_DEF = {
-    20: { r: 0.52, t: 0.072, color: 0x1a4fcc },
-    10: { r: 0.44, t: 0.060, color: 0x16a34a },
-     5: { r: 0.36, t: 0.050, color: 0x16a34a },
+    20: { r: 0.52, t: 0.072, color: 0x1a47a0 },  // Eleiko blue
+    10: { r: 0.44, t: 0.060, color: 0x1e6b2e },  // Eleiko green
+     5: { r: 0.36, t: 0.050, color: 0x1e6b2e },  // Eleiko green (smaller)
   };
 
   const PRESETS = {
@@ -62,23 +65,27 @@
 
   function buildPlates(weights) {
     const group = new THREE.Group();
+
     [1, -1].forEach(side => {
       let x = side * 1.30;
       weights.forEach(w => {
         const { r, t, color } = PLATE_DEF[w];
         x += side * (t / 2);
 
+        // Coloured cylinder body
         const disc = cyl(r, r, t, 48,
-          new THREE.MeshStandardMaterial({ color, metalness: 0.4, roughness: 0.5 }));
+          new THREE.MeshStandardMaterial({ color, metalness: 0.35, roughness: 0.55 }));
         disc.position.x = x;
         group.add(disc);
 
-        const hub = cyl(0.09, 0.09, t + 0.004, 24, hubMat);
+        // Hub ring
+        const hub = cyl(0.09, 0.09, t + 0.006, 24, hubMat);
         hub.position.x = x;
         group.add(hub);
 
         x += side * (t / 2 + 0.010);
       });
+
       const collar = cyl(0.071, 0.071, 0.16, 24, collarMat);
       collar.position.x = x + side * 0.08;
       group.add(collar);
@@ -88,10 +95,10 @@
 
   function disposeGroup(group) {
     group.traverse(obj => {
-      if (obj.isMesh) {
-        obj.geometry.dispose();
-        if (obj.material && obj.material.dispose) obj.material.dispose();
-      }
+      if (!obj.isMesh) return;
+      obj.geometry.dispose();
+      const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+      mats.forEach(m => { if (m) { if (m.map) m.map.dispose(); m.dispose(); } });
     });
   }
 

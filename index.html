@@ -10,9 +10,12 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
+
+  <div class="yarn-bg" aria-hidden="true">
+    <svg id="yarn-svg" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
 
   <nav class="nav">
     <span class="nav-logo">JS</span>
@@ -21,20 +24,20 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
+    <div class="hero-content" id="hero-content">
       <div class="hero-text">
         <p class="hero-eyebrow">Hello, I'm</p>
         <h1 class="hero-name">Jonatan<br />Stark</h1>
         <p class="hero-meta">Account Manager &nbsp;·&nbsp; B.Sc. Service Management &amp; Business Administration, LUSEM</p>
         <p class="hero-desc">
-          Building digital solutions at the intersection of code, design, and curiosity.
+          <span class="btc-symbol">₿</span>uilding digital solutions at the intersection of code, design, and curiosity.
         </p>
         <div class="hero-actions">
           <a href="#about" class="btn btn-primary">Learn more about me</a>
           <a href="mailto:jonatan.v.stark@gmail.com" class="btn btn-ghost">Say hello →</a>
         </div>
       </div>
-      <div class="hero-image-wrap">
+      <div class="hero-image-wrap" id="hero-image-wrap">
         <div class="hero-image-bg"></div>
         <img src="profile.jpg" alt="Jonatan Stark" class="hero-image" />
       </div>
@@ -44,13 +47,34 @@
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <p class="section-label reveal">About me</p>
+      <div class="about-grid">
+        <div class="about-block reveal" data-delay="0">
+          <h3 class="about-heading">Builder by nature</h3>
+          <p class="about-text">I'm drawn to the act of building — whether that means assembling something with my hands or shipping something on a screen. Coding is still a relatively new chapter for me, but one I've thrown myself into with the same drive I apply to everything else: consistency, embrace the hard parts, and keep moving forward.</p>
+        </div>
+        <div class="about-block reveal" data-delay="80">
+          <h3 class="about-heading">Conviction in decentralization</h3>
+          <p class="about-text">I believe that economic freedom is a fundamental right, and that decentralized monetary systems are one of the most important tools for getting there. That conviction shapes the way I think about technology — not just as a career, but as a means to build a more open and equitable world.</p>
+        </div>
+        <div class="about-block reveal" data-delay="160">
+          <h3 class="about-heading">16 years under the bar</h3>
+          <p class="about-text">Sport has been a constant. Sixteen years of weight training have taught me more about discipline and long-term thinking than anything else. I complement it with running, golf, and tennis — each one a different kind of challenge, each one a reminder that progress is rarely linear but always worth it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SKILLS -->
-  <section class="skills-section" id="about">
+  <section class="skills-section">
     <div class="skills-inner">
-      <p class="section-label">Skills & tools</p>
+      <p class="section-label reveal">Skills & tools</p>
       <div class="skills-categories">
 
-        <div class="skills-category">
+        <div class="skills-category reveal" data-delay="0">
           <h3 class="skills-cat-title">Development</h3>
           <div class="skills-chips">
             <span class="chip">Java</span>
@@ -62,7 +86,7 @@
           </div>
         </div>
 
-        <div class="skills-category">
+        <div class="skills-category reveal" data-delay="80">
           <h3 class="skills-cat-title">Business & Tools</h3>
           <div class="skills-chips">
             <span class="chip chip-muted">SAP</span>
@@ -73,7 +97,7 @@
           </div>
         </div>
 
-        <div class="skills-category">
+        <div class="skills-category reveal" data-delay="160">
           <h3 class="skills-cat-title">Emerging</h3>
           <div class="skills-chips">
             <span class="chip chip-gold">AI / LLMs</span>
@@ -86,39 +110,155 @@
     </div>
   </section>
 
-  <!-- ETH CHART -->
-  <section class="chart-section">
-    <div class="chart-inner">
-      <div class="chart-header">
-        <p class="section-label">Markets</p>
-        <div class="chart-title-row">
-          <span class="chart-pair">ETH / USD</span>
-          <span class="chart-period" id="eth-change">30 days</span>
-        </div>
-        <p class="chart-price" id="eth-price">—</p>
-      </div>
-      <div class="chart-wrap">
-        <canvas id="eth-chart"></canvas>
-      </div>
-    </div>
-  </section>
-
   <!-- BARBELL 3D -->
   <section class="barbell-section">
     <canvas id="barbell-canvas"></canvas>
-    <div class="barbell-controls">
-      <button class="lift-btn active" data-lift="squat">Squat <span>200 kg</span></button>
-      <button class="lift-btn" data-lift="bench">Bench <span>150 kg</span></button>
-      <button class="lift-btn" data-lift="deadlift">Deadlift <span>180 kg</span></button>
+    <div class="barbell-controls reveal" data-delay="0">
+      <p class="barbell-pr-label">Personal records</p>
+      <div class="barbell-btns">
+        <button class="lift-btn active" data-lift="squat">Squat <span>200 kg</span></button>
+        <button class="lift-btn" data-lift="bench">Bench <span>150 kg</span></button>
+        <button class="lift-btn" data-lift="deadlift">Deadlift <span>180 kg</span></button>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer reveal" data-delay="0">
     <p>© 2026 Jonatan Stark</p>
   </footer>
 
   <script src="barbell.js"></script>
-  <script src="eth-chart.js"></script>
+  <script>
+  // ── Yarn background ──
+  (function () {
+    const svg = document.getElementById('yarn-svg');
+
+    function buildPath(W, H) {
+      // Seeded pseudo-random so the path is always the same
+      let s = 0xA3F2C1;
+      function r(a, b) {
+        s ^= s << 13; s ^= s >> 17; s ^= s << 5;
+        return a + ((s >>> 0) / 0xFFFFFFFF) * (b - a);
+      }
+
+      let x = W * 0.52, y = 0;
+      let d = `M ${x.toFixed(1)} 0`;
+      const segs = 22;
+      const sh = H / segs;
+
+      for (let i = 0; i < segs; i++) {
+        const ny = (i + 1) * sh;
+
+        if (i % 5 === 3) {
+          // Tight loop — like yarn coiling
+          const dir = i % 2 === 0 ? 1 : -1;
+          const lx = Math.max(W * 0.08, Math.min(W * 0.92, x + dir * W * 0.22));
+          const my = y + sh * 0.52;
+          d += ` C ${(x + dir * W * 0.32).toFixed(1)} ${(y + sh * 0.18).toFixed(1)},`
+             + ` ${(lx + dir * W * 0.09).toFixed(1)} ${(my - sh * 0.09).toFixed(1)},`
+             + ` ${lx.toFixed(1)} ${my.toFixed(1)}`;
+          d += ` C ${(lx - dir * W * 0.09).toFixed(1)} ${(my + sh * 0.09).toFixed(1)},`
+             + ` ${(x + dir * W * 0.08).toFixed(1)} ${(ny - sh * 0.12).toFixed(1)},`
+             + ` ${x.toFixed(1)} ${ny.toFixed(1)}`;
+        } else {
+          // Sweeping S-curve
+          const dir = r(0, 1) > 0.5 ? 1 : -1;
+          const swing = r(W * 0.18, W * 0.34);
+          const nx = Math.max(W * 0.1, Math.min(W * 0.9, x + dir * r(W * 0.1, W * 0.28)));
+          d += ` C ${(x + dir * swing).toFixed(1)} ${(y + sh * 0.32).toFixed(1)},`
+             + ` ${(nx - dir * swing * 0.28).toFixed(1)} ${(ny - sh * 0.32).toFixed(1)},`
+             + ` ${nx.toFixed(1)} ${ny.toFixed(1)}`;
+          x = nx;
+        }
+        y = ny;
+      }
+      return d;
+    }
+
+    let pathEl, totalLen;
+
+    function init() {
+      const W = document.documentElement.clientWidth;
+      const H = document.body.scrollHeight;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.setAttribute('width', W);
+      svg.setAttribute('height', H);
+
+      if (!pathEl) {
+        pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathEl.setAttribute('fill', 'none');
+        pathEl.setAttribute('stroke', 'rgba(247,147,26,0.18)');
+        pathEl.setAttribute('stroke-width', '2.2');
+        pathEl.setAttribute('stroke-linecap', 'round');
+        pathEl.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(pathEl);
+      }
+
+      pathEl.setAttribute('d', buildPath(W, H));
+      totalLen = pathEl.getTotalLength();
+      pathEl.style.strokeDasharray = totalLen;
+      draw();
+    }
+
+    function draw() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+      if (pathEl) pathEl.style.strokeDashoffset = totalLen * (1 - progress);
+    }
+
+    window.addEventListener('load', init);
+
+    let yarnTick = false;
+    window.addEventListener('scroll', () => {
+      if (!yarnTick) { requestAnimationFrame(() => { draw(); yarnTick = false; }); yarnTick = true; }
+    }, { passive: true });
+  })();
+  </script>
+  <script>
+  (function () {
+    const heroContent  = document.getElementById('hero-content');
+    const heroImgWrap  = document.getElementById('hero-image-wrap');
+
+    // ── Reveal on scroll (animate in once, stay visible) ──
+    document.querySelectorAll('.reveal').forEach(el => {
+      const delay = el.dataset.delay || 0;
+      el.style.transitionDelay = delay + 'ms';
+    });
+
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── Hero parallax + depth fade ──
+    let ticking = false;
+    function updateHero() {
+      const sy  = window.scrollY;
+      const vh  = window.innerHeight;
+      const t   = Math.min(sy / (vh * 0.75), 1);   // 0 → 1 over first 75vh of scroll
+
+      // Text drifts upward and fades out
+      heroContent.style.transform = `translateY(${sy * 0.28}px) scale(${1 - t * 0.07})`;
+      heroContent.style.opacity   = Math.max(0, 1 - t * 1.6);
+
+      // Profile image zooms in slightly — creates the "diving in" depth illusion
+      heroImgWrap.style.transform = `translateY(${sy * 0.10}px) scale(${1 + t * 0.12})`;
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateHero); ticking = true; }
+    }, { passive: true });
+
+    updateHero();
+  })();
+  </script>
 </body>
 </html>
