@@ -199,16 +199,13 @@
       return d;
     }
 
-    let gEl = null;
-
     function init() {
       const W  = document.documentElement.clientWidth;
-      const VH = window.innerHeight;
-      const H  = document.body.scrollHeight;
-      svg.setAttribute('viewBox', `0 0 ${W} ${VH}`);
+      const H  = window.innerHeight;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
       svg.innerHTML = '';
-      gEl = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      svg.appendChild(gEl);
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      svg.appendChild(g);
       THREADS.forEach(cfg => {
         const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         p.setAttribute('d', makePath(W, H, cfg));
@@ -217,21 +214,12 @@
         p.setAttribute('stroke-width', String(cfg.sw));
         p.setAttribute('stroke-linecap', 'round');
         p.setAttribute('stroke-linejoin', 'round');
-        gEl.appendChild(p);
+        g.appendChild(p);
       });
-      draw();
-    }
-
-    function draw() {
-      if (gEl) gEl.setAttribute('transform', `translate(0,${-window.scrollY})`);
     }
 
     window.addEventListener('load', init);
     window.addEventListener('resize', init);
-    let tick = false;
-    window.addEventListener('scroll', () => {
-      if (!tick) { requestAnimationFrame(() => { draw(); tick = false; }); tick = true; }
-    }, { passive: true });
   })();
   </script>
   <script>
