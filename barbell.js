@@ -154,11 +154,17 @@
   document.querySelectorAll('.lift-btn').forEach(btn =>
     btn.addEventListener('click', () => switchTo(btn.dataset.lift)));
 
-  // ── Render loop ──
-  let lastT = 0, clock = 0;
+  // ── Render loop — only runs while section is visible ──
+  let lastT = 0, clock = 0, visible = false;
+
+  const visObs = new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+  }, { threshold: 0 });
+  visObs.observe(section);
 
   function animate(ts) {
     requestAnimationFrame(animate);
+    if (!visible) return;
     const dt = Math.min((ts - lastT) / 1000, 0.05);
     lastT = ts;
     clock += dt;
