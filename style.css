@@ -453,7 +453,8 @@ body {
 }
 
 /* ── Responsive ── */
-html, body { overflow-x: hidden; max-width: 100%; }
+html { overflow-x: hidden; }
+body { max-width: 100%; }
 
 @media (max-width: 900px) {
   .hero-content {

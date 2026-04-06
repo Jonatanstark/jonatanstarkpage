@@ -199,13 +199,17 @@
       return d;
     }
 
+    let gEl = null;
+
     function init() {
-      const W  = document.documentElement.clientWidth;
-      const H  = window.innerHeight;
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const W = document.documentElement.clientWidth;
+      const H = document.body.scrollHeight;
+      const VH = window.innerHeight;
+      svg.setAttribute('viewBox', `0 0 ${W} ${VH}`);
       svg.innerHTML = '';
-      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      svg.appendChild(g);
+      gEl = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      gEl.style.willChange = 'transform';
+      svg.appendChild(gEl);
       THREADS.forEach(cfg => {
         const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         p.setAttribute('d', makePath(W, H, cfg));
@@ -214,12 +218,18 @@
         p.setAttribute('stroke-width', String(cfg.sw));
         p.setAttribute('stroke-linecap', 'round');
         p.setAttribute('stroke-linejoin', 'round');
-        g.appendChild(p);
+        gEl.appendChild(p);
       });
+      sync();
+    }
+
+    function sync() {
+      if (gEl) gEl.style.transform = `translateY(${-window.scrollY}px)`;
     }
 
     window.addEventListener('load', init);
     window.addEventListener('resize', init);
+    window.addEventListener('scroll', sync, { passive: true });
   })();
   </script>
   <script>
