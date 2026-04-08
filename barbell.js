@@ -53,7 +53,7 @@
   // ── Plate definitions (Eleiko IPF colours) ──
   const PLATE_DEF = {
     20: { r: 0.52, t: 0.072, color: 0x1a47a0 },  // Eleiko blue
-    10: { r: 0.44, t: 0.060, color: 0x1e6b2e },  // Eleiko green
+    10: { r: 0.44, t: 0.060, color: 0xf0f0f0 },  // white
      5: { r: 0.36, t: 0.050, color: 0x1e6b2e },  // Eleiko green (smaller)
   };
 
