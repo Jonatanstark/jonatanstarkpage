@@ -53,13 +53,13 @@
   // ── Plate definitions (Eleiko IPF colours) ──
   const PLATE_DEF = {
     20: { r: 0.52, t: 0.072, color: 0x1a47a0 },  // Eleiko blue
-    10: { r: 0.44, t: 0.060, color: 0xf0f0f0 },  // white
-     5: { r: 0.36, t: 0.050, color: 0x1e6b2e },  // Eleiko green (smaller)
+    10: { r: 0.52, t: 0.060, color: 0x1e6b2e },  // Eleiko green (same width, thinner)
+     5: { r: 0.36, t: 0.050, color: 0xf0f0f0 },  // white
   };
 
   const PRESETS = {
     squat:    [20, 20, 20, 20, 10],
-    bench:    [20, 20, 20, 10],
+    bench:    [20, 20, 20, 5],
     deadlift: [20, 20, 20, 20],
   };
 
